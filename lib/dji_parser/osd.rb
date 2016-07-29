@@ -1,5 +1,8 @@
+require_relative 'binread_helpers'
+
 module DjiParser
   class Osd
+    include BinreadHelpers
 
     attr_reader :accelerator_over_range, :app_commend, :barometer_dead_in_air,
       :battery, :battery_type, :can_ioc_work, :compass_error, :drone_type,
@@ -143,45 +146,45 @@ module DjiParser
     end
 
     def accelerator_over_range
-      read_big_int(32) >> 24 & 1 != 0
+      read_unsigned_int(32) >> 24 & 1 != 0
     end
 
     def app_commend
-      read_byte(31)
+      read_unsigned_char(31)
     end
 
     def barometer_dead_in_air
-      read_big_int(32) >> 26 & 1 != 0
+      read_unsigned_int(32) >> 26 & 1 != 0
     end
 
     def battery
-      read_byte(40)
+      read_unsigned_char(40)
     end
 
     def battery_type
       return BATTERY_TYPE['2'] unless drone_type == 'P3C'
 
-      BATTERY_TYPE[(read_big_int(32) >> 22 & 3).to_s]
+      BATTERY_TYPE[(read_unsigned_int(32) >> 22 & 3).to_s]
     end
 
     def can_ioc_work
-      (read_big_int(32) & 1) == 1
+      (read_unsigned_int(32) & 1) == 1
     end
 
     def compass_error
-      !(read_big_int(32) & 65536).zero?
+      !(read_unsigned_int(32) & 65536).zero?
     end
 
     def drone_type
-      DRONE_TYPES[read_byte(48).to_s]
+      DRONE_TYPES[read_unsigned_char(48).to_s]
     end
 
     def flight_action
-      read_byte(37)
+      read_unsigned_char(37)
     end
 
     def fly_state
-      FLY_STATE[(read_byte(30) & -129).to_s]
+      FLY_STATE[(read_unsigned_char(30) & -129).to_s]
     end
 
     def fly_time
@@ -189,23 +192,23 @@ module DjiParser
     end
 
     def fly_version
-      read_byte(47)
+      read_unsigned_char(47)
     end
 
     def go_home_status
-      GOHOME_STATUS[(read_big_int(32) >> 5 & 7).to_s]
+      GOHOME_STATUS[(read_unsigned_int(32) >> 5 & 7).to_s]
     end
 
     def gps_level
-      read_big_int(32) >> 18 & 15
+      read_unsigned_int(32) >> 18 & 15
     end
 
     def gps_num
-      read_byte(36)
+      read_unsigned_char(36)
     end
 
     def ground_or_sky
-      read_big_int(32) >> 1 & 3
+      read_unsigned_int(32) >> 1 & 3
     end
 
     def height
@@ -220,15 +223,15 @@ module DjiParser
     end
 
     def imu_init_fail_reason
-      IMU_INITFAIL_REASON[read_byte(49).to_s]
+      IMU_INITFAIL_REASON[read_unsigned_char(49).to_s]
     end
 
     def imu_preheated
-      (read_big_int(32) & 4096) != 0
+      (read_unsigned_int(32) & 4096) != 0
     end
 
     def in_rc_state
-      (read_byte(30) & 128).zero?
+      (read_unsigned_char(30) & 128).zero?
     end
 
     def longitude
@@ -240,30 +243,30 @@ module DjiParser
     end
 
     def mode_channel
-      (read_big_int(32) & 24576) >> 13
+      (read_unsigned_int(32) & 24576) >> 13
     end
 
     def motor_failed_cause
-      s = read_byte(38)
+      s = read_unsigned_char(38)
       return 'NONE' if (s >> 7).zero?
 
       MOTOR_START_FAILED_CAUSE[(s & 127).to_s]
     end
 
     def motor_revolution
-      read_byte(44)
+      read_unsigned_char(44)
     end
 
     def motor_up
-      (read_big_int(32) >> 3 & 1) == 1
+      (read_unsigned_int(32) >> 3 & 1) == 1
     end
 
     def non_gps_cause
-      NON_GPS_CAUSE[(read_byte(39) & 15).to_s]
+      NON_GPS_CAUSE[(read_unsigned_char(39) & 15).to_s]
     end
 
     def not_enough_force
-      !(read_big_int(32) >> 28 & 1).zero?
+      !(read_unsigned_int(32) >> 28 & 1).zero?
     end
 
     def pitch
@@ -275,27 +278,27 @@ module DjiParser
     end
 
     def swave_height
-      read_byte(41)
+      read_unsigned_char(41)
     end
 
     def swave_work
-      !(read_big_int(32) & 16).zero?
+      !(read_unsigned_int(32) & 16).zero?
     end
 
     def vibrating
-      !(read_big_int(32) >> 25 & 1).zero?
+      !(read_unsigned_int(32) >> 25 & 1).zero?
     end
 
     def vision_used
-      !(read_big_int(32) & 256).zero?
+      !(read_unsigned_int(32) & 256).zero?
     end
 
     def voltage_warning
-      (read_big_int(32) & 1536) >> 9
+      (read_unsigned_int(32) & 1536) >> 9
     end
 
     def wave_error
-      !(read_big_int(32) & 131072).zero?
+      !(read_unsigned_int(32) & 131072).zero?
     end
 
     def x_speed
@@ -312,29 +315,6 @@ module DjiParser
 
     def yaw
       read_signed_short(28)
-    end
-
-    private
-    ##########################################################################
-
-    def read_double(offset)
-      @buffer.unpack("@#{@block_offset + offset}E").first
-    end
-
-    def read_signed_short(offset)
-      @buffer.unpack("@#{@block_offset + offset}s").first
-    end
-
-    def read_unsigned_short(offset)
-      @buffer.unpack("@#{@block_offset + offset}S").first
-    end
-
-    def read_big_int(offset)
-      @buffer.unpack("@#{@block_offset + offset}L").first
-    end
-
-    def read_byte(offset)
-      @buffer.unpack("@#{@block_offset + offset}c").first
     end
 
   end
