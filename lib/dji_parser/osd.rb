@@ -15,134 +15,132 @@ module DjiParser
       :wave_error, :x_speed, :y_speed, :yaw, :z_speed
 
     DRONE_TYPES = {
-      '0' => 'Unknown',
-      '1' => 'Inspire',
-      '2' => 'P3S',
-      '3' => 'P3X',
-      '4' => 'P3C',
-      '5' => 'OpenFrame',
-      '100' => 'None'
+      0   => 'Unknown',
+      1   => 'Inspire',
+      2   => 'P3S',
+      3   => 'P3X',
+      4   => 'P3C',
+      5   => 'OpenFrame',
+      100 => 'None'
     }
 
     FLY_STATE = {
-      '0' => 'MANUAL',
-      '1' => 'ATTI',
-      '2' => 'ATTI_CL',
-      '3' => 'ATTI_HOVER',
-      '4' => 'HOVER',
-      '6' => 'GPS_ATTI',
-      '7' => 'GPS_CL',
-      '8' => 'GPS_HOME_LOCK',
-      '9' => 'GPS_HOT_POINT',
-      '10' => 'ASSISTED_TAKEOFF',
-      '11' => 'AUTO_TAKEOFF',
-      '12' => 'AUTO_LANDING',
-      '13' => 'ATTI_LANDING',
-      '14' => 'NAVI_GO',
-      '15' => 'GO_HOME',
-      '16' => 'CLICK_GO',
-      '17' => 'JOYSTICK',
-      '23' => 'ATTI_LIMITED',
-      '24' => 'GPS_ATTI_LIMITED',
-      '100' => 'OTHER' 
+      0   => 'MANUAL',
+      1   => 'ATTI',
+      2   => 'ATTI_CL',
+      3   => 'ATTI_HOVER',
+      4   => 'HOVER',
+      6   => 'GPS_ATTI',
+      7   => 'GPS_CL',
+      8   => 'GPS_HOME_LOCK',
+      9   => 'GPS_HOT_POINT',
+      10  => 'ASSISTED_TAKEOFF',
+      11  => 'AUTO_TAKEOFF',
+      12  => 'AUTO_LANDING',
+      13  => 'ATTI_LANDING',
+      14  => 'NAVI_GO',
+      15  => 'GO_HOME',
+      16  => 'CLICK_GO',
+      17  => 'JOYSTICK',
+      23  => 'ATTI_LIMITED',
+      24  => 'GPS_ATTI_LIMITED',
+      100 => 'OTHER'
     }
 
     GOHOME_STATUS = {
-      '0' => 'STANDBY',
-      '1' => 'PREASCENDING',
-      '2' => 'ALIGN',
-      '3' => 'ASCENDING',
-      '4' => 'CRUISE',
-      '7' => 'OTHER'
+      0 => 'STANDBY',
+      1 => 'PREASCENDING',
+      2 => 'ALIGN',
+      3 => 'ASCENDING',
+      4 => 'CRUISE',
+      7 => 'OTHER'
     }
 
     BATTERY_TYPE = {
-      '0' => 'UNKNOWN',
-      '1' => 'NONSMART',
-      '2' => 'SMART'
+      0 => 'UNKNOWN',
+      1 => 'NONSMART',
+      2 => 'SMART'
     }
 
     MOTOR_START_FAILED_CAUSE = {
-      '0' => 'None',
-      '1' => 'CompassError',
-      '2' => 'AssistantProtected',
-      '3' => 'DeviceLocked',
-      '4' => 'DistanceLimit',
-      '5' => 'IMUNeedCalibration',
-      '6' => 'IMUSNError',
-      '7' => 'IMUWarning',
-      '8' => 'CompassCalibrating',
-      '9' => 'AttiError',
-      '10' => 'NoviceProtected',
-      '11' => 'BatteryCellError',
-      '12' => 'BatteryCommuniteError',
-      '13' => 'SeriouLowVoltage',
-      '14' => 'SeriouLowPower',
-      '15' => 'LowVoltage',
-      '16' => 'TempureVolLow',
-      '17' => 'SmartLowToLand',
-      '18' => 'BatteryNotReady',
-      '19' => 'SimulatorMode',
-      '20' => 'PackMode',
-      '21' => 'AttitudeAbNormal',
-      '22' => 'UnActive',
-      '23' => 'FlyForbiddenError',
-      '24' => 'BiasError',
-      '25' => 'EscError',
-      '26' => 'ImuInitError',
-      '27' => 'SystemUpgrade',
-      '28' => 'SimulatorStarted',
-      '29' => 'ImuingError',
-      '30' => 'AttiAngleOver',
-      '31' => 'GyroscopeError',
-      '32' => 'AcceletorError',
-      '33' => 'CompassFailed',
-      '34' => 'BarometerError',
-      '35' => 'BarometerNegative',
-      '36' => 'CompassBig',
-      '37' => 'GyroscopeBiasBig',
-      '38' => 'AcceletorBiasBig',
-      '39' => 'CompassNoiseBig',
-      '40' => 'BarometerNoiseBig',
-      '256' => 'OTHER'
+      0  => 'None',
+      1  => 'CompassError',
+      2  => 'AssistantProtected',
+      3  => 'DeviceLocked',
+      4  => 'DistanceLimit',
+      5  => 'IMUNeedCalibration',
+      6  => 'IMUSNError',
+      7  => 'IMUWarning',
+      8  => 'CompassCalibrating',
+      9  => 'AttiError',
+      10 => 'NoviceProtected',
+      11 => 'BatteryCellError',
+      12 => 'BatteryCommuniteError',
+      13 => 'SeriouLowVoltage',
+      14 => 'SeriouLowPower',
+      15 => 'LowVoltage',
+      16 => 'TempureVolLow',
+      17 => 'SmartLowToLand',
+      18 => 'BatteryNotReady',
+      19 => 'SimulatorMode',
+      20 => 'PackMode',
+      21 => 'AttitudeAbNormal',
+      22 => 'UnActive',
+      23 => 'FlyForbiddenError',
+      24 => 'BiasError',
+      25 => 'EscError',
+      26 => 'ImuInitError',
+      27 => 'SystemUpgrade',
+      28 => 'SimulatorStarted',
+      29 => 'ImuingError',
+      30 => 'AttiAngleOver',
+      31 => 'GyroscopeError',
+      32 => 'AcceletorError',
+      33 => 'CompassFailed',
+      34 => 'BarometerError',
+      35 => 'BarometerNegative',
+      36 => 'CompassBig',
+      37 => 'GyroscopeBiasBig',
+      38 => 'AcceletorBiasBig',
+      39 => 'CompassNoiseBig',
+      40 => 'BarometerNoiseBig',
+      256 => 'OTHER'
     }
 
     NON_GPS_CAUSE  = {
-      '0' => 'ALREADY',
-      '1' => 'FORBIN',
-      '2' => 'GPSNUM_NONENOUGH',
-      '3' => 'GPS_HDOP_LARGE',
-      '4' => 'GPS_POSITION_NONMATCH',
-      '5' => 'SPEED_ERROR_LARGE',
-      '6' => 'YAW_ERROR_LARGE',
-      '7' => 'COMPASS_ERROR_LARGE',
-      '8' => 'UNKNOWN'
+      0 => 'ALREADY',
+      1 => 'FORBIN',
+      2 => 'GPSNUM_NONENOUGH',
+      3 => 'GPS_HDOP_LARGE',
+      4 => 'GPS_POSITION_NONMATCH',
+      5 => 'SPEED_ERROR_LARGE',
+      6 => 'YAW_ERROR_LARGE',
+      7 => 'COMPASS_ERROR_LARGE',
+      8 => 'UNKNOWN'
     }
 
     IMU_INITFAIL_REASON = {
-      '0' => 'MONITOR_ERROR',
-      '1' => 'COLLECTING_DATA',
-      '2' => 'GYRO_DEAD',
-      '3' => 'ACCE_DEAD',
-      '4' => 'COMPASS_DEAD',
-      '5' => 'BAROMETER_DEAD',
-      '6' => 'BAROMETER_NEGATIVE',
-      '7' => 'COMPASS_MOD_TOO_LARGE',
-      '8' => 'GYRO_BIAS_TOO_LARGE',
-      '9' => 'ACCE_BIAS_TOO_LARGE',
-      '10' => 'COMPASS_NOISE_TOO_LARGE',
-      '11' => 'BAROMETER_NOISE_TOO_LARGE',
-      '12' => 'WAITING_MC_STATIONARY',
-      '13' => 'ACCE_MOVE_TOO_LARGE',
-      '14' => 'MC_HEADER_MOVED',
-      '15' => 'MC_VIBRATED',
-      '16' => 'NONE'
+      0  => 'MONITOR_ERROR',
+      1  => 'COLLECTING_DATA',
+      2  => 'GYRO_DEAD',
+      3  => 'ACCE_DEAD',
+      4  => 'COMPASS_DEAD',
+      5  => 'BAROMETER_DEAD',
+      6  => 'BAROMETER_NEGATIVE',
+      7  => 'COMPASS_MOD_TOO_LARGE',
+      8  => 'GYRO_BIAS_TOO_LARGE',
+      9  => 'ACCE_BIAS_TOO_LARGE',
+      10 => 'COMPASS_NOISE_TOO_LARGE',
+      11 => 'BAROMETER_NOISE_TOO_LARGE',
+      12 => 'WAITING_MC_STATIONARY',
+      13 => 'ACCE_MOVE_TOO_LARGE',
+      14 => 'MC_HEADER_MOVED',
+      15 => 'MC_VIBRATED',
+      16 => 'NONE'
     }
 
-    def initialize(buffer, offset, dbg)
+    def initialize(buffer, offset)
       @buffer, @block_offset = buffer, offset
-      #puts dbg
-      #debugger if dbg >= 99
     end
 
     def accelerator_over_range
@@ -162,9 +160,9 @@ module DjiParser
     end
 
     def battery_type
-      return BATTERY_TYPE['2'] unless drone_type == 'P3C'
+      return BATTERY_TYPE[2] unless drone_type == 'P3C'
 
-      BATTERY_TYPE[(read_unsigned_int(32) >> 22 & 3).to_s]
+      BATTERY_TYPE[(read_unsigned_int(32) >> 22 & 3)]
     end
 
     def can_ioc_work
@@ -176,7 +174,7 @@ module DjiParser
     end
 
     def drone_type
-      DRONE_TYPES[read_unsigned_char(48).to_s]
+      DRONE_TYPES[read_unsigned_char(48)]
     end
 
     def flight_action
@@ -184,7 +182,7 @@ module DjiParser
     end
 
     def fly_state
-      FLY_STATE[(read_unsigned_char(30) & -129).to_s]
+      FLY_STATE[(read_unsigned_char(30) & -129)]
     end
 
     def fly_time
@@ -196,7 +194,7 @@ module DjiParser
     end
 
     def go_home_status
-      GOHOME_STATUS[(read_unsigned_int(32) >> 5 & 7).to_s]
+      GOHOME_STATUS[(read_unsigned_int(32) >> 5 & 7)]
     end
 
     def gps_level
@@ -223,7 +221,7 @@ module DjiParser
     end
 
     def imu_init_fail_reason
-      IMU_INITFAIL_REASON[read_unsigned_char(49).to_s]
+      IMU_INITFAIL_REASON[read_unsigned_char(49)]
     end
 
     def imu_preheated
@@ -250,7 +248,7 @@ module DjiParser
       s = read_unsigned_char(38)
       return 'NONE' if (s >> 7).zero?
 
-      MOTOR_START_FAILED_CAUSE[(s & 127).to_s]
+      MOTOR_START_FAILED_CAUSE[(s & 127)]
     end
 
     def motor_revolution
@@ -262,7 +260,7 @@ module DjiParser
     end
 
     def non_gps_cause
-      NON_GPS_CAUSE[(read_unsigned_char(39) & 15).to_s]
+      NON_GPS_CAUSE[(read_unsigned_char(39) & 15)]
     end
 
     def not_enough_force
